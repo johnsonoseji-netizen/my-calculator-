@@ -1,0 +1,109 @@
+   /* my calculator - fixed overflow issue*/
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background:#222;
+}
+
+.outerContainer{
+  height: auto;
+  width:80vw;
+  max-width:320px;
+  background-color: black;
+  color:white;
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 8px;
+  padding-bottom:15px;
+}
+.screen{
+  height: 15vh;
+  width:auto;
+  background-color: white;
+  color:black;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  margin-right: 20px;
+  margin-left: 20px;
+  position:relative;
+  top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 15px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+.screen h1{
+  font-weight: bolder;
+  font-size: 2.5rem;
+  color:red;
+  width:100%;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clearDeletecontainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  margin: 20px 10px 0 10px;
+}
+
+.clearDeletecontainer .clearbtn{
+  margin: 6px;
+  height: 60px;
+  width:40vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color:#000;
+  font-weight:bold;
+  background-color: rgba(0,255,255,0.9);
+}
+
+.numbercontainer{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:10px;
+  margin: 10px;
+  list-style:none;
+}
+
+.numbercontainer li{
+  background-color: #333;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.equlto{
+  grid-column: span 2;
+  color:#00ff88;
+  background-color: rgba(0,255,136,0.14)!important;
+  font-size: 1.5rem;
+  border: 2px solid rgba(0,255,136,0.14)!important;
+  box-shadow: 0 0 25px rgba(0,255,136,0.14);
+}
+
+.defcolor{
+  background-color: rgba(200,130,236,0.9)!important;
+  font-size: 1.5rem;
+}
