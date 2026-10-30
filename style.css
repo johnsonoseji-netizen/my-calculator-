@@ -1,105 +1,115 @@
-/* my calculator - fixed */
+/* My Calculator - Final Fixed Version */
 
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
 body{
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background:#222;
+  background: #1a1a1a;
+  padding: 15px;
 }
 
 .outerContainer{
-  width:80vw;
-  max-width:320px;
-  background-color: black;
-  color:white;
-  margin: 10px;
-  overflow: hidden;
-  border-radius: 12px;
-  padding: 15px;
-  padding-bottom:20px;
-}
-.screen{
-  height: 18vh;
   width: 100%;
-  background-color: white;
-  color:black;
-  border-radius: 10px;
-  margin-bottom: 25px;
-  margin-top: 10px;
+  max-width: 400px; /* Bigger than 320px - fixes small look */
+  background-color: #000;
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.screen{
+  height: 110px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 20px;
   overflow: hidden;
-  border: none;
 }
 
 .screen h1{
-  font-weight: bold;
-  font-size: 2.8rem;
-  color:#111;
-  width:100%;
-  margin: 0;
+  font-weight: 700;
+  font-size: 3rem; /* Bigger display */
+  color: #111; /* Fixed: was red */
+  width: 100%;
   text-align: right;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1;
 }
 
 .clearDeletecontainer{
   display: flex;
-  justify-content: center;
-  gap:10px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .clearDeletecontainer .clearbtn{
-  height: 55px;
-  width: 50%;
+  height: 60px;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  color:#000;
-  font-weight:bold;
+  border-radius: 10px;
+  color: #000;
+  font-weight: 800;
+  font-size: 1rem;
   background-color: #00e5ff;
   cursor: pointer;
 }
 
+.clearDeletecontainer .clearbtn:active{
+  transform: scale(0.96);
+}
+
 .numbercontainer{
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap:10px;
-  list-style:none;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  list-style: none;
 }
 
 .numbercontainer li{
-  background-color: #333;
-  height: 60px;
+  background-color: #2d2d2d;
+  height: 68px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 500;
   cursor: pointer;
-  user-select: none;
+  transition: all 0.1s;
+}
+
+.numbercontainer li:active{
+  background-color: #444;
+  transform: scale(0.95);
 }
 
 .equlto{
   grid-column: span 2;
-  color:#00ff88;
-  background-color: rgba(0,255,136,0.18)!important;
-  font-size: 1.8rem;
-  border: 1px solid rgba(0,255,136,0.3)!important;
+  color: #00ff88 !important;
+  background-color: rgba(0,255,136,0.15) !important;
+  font-size: 1.8rem !important;
+  border: 1px solid rgba(0,255,136,0.3) !important;
 }
 
 .defcolor{
-  background-color: #c882ec!important;
-  font-size: 1.5rem;
-  color: white;
+  background-color: #b56fe0 !important;
+  color: white !important;
+  font-size: 1.5rem !important;
 }
