@@ -3,103 +3,97 @@ const buttons = document.querySelectorAll('.numbercontainer li');
 const clearBtn = document.getElementById('clearbtn');
 const deleteBtn = document.getElementById('deletbtn');
 
-let currentInput = '0';
-let shouldReset = false;
+let input = '0';
 
-function updateDisplay() {
-  if (currentInput.length > 12) {
-    display.style.fontSize = '40px';
-  } else {
-    display.style.fontSize = '62px';
-  }
-  display.textContent = currentInput;
+function show() {
+  display.textContent = input;
+  display.style.fontSize = input.length > 9 ? '42px' : '62px';
+}
+
+function isOperator(ch) {
+  return ['+', '-', '*', '÷', 'x', '×', '%', '/'].includes(ch);
 }
 
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
-    let value = btn.getAttribute('value');
+    let val = btn.getAttribute('value');
 
-    if (value === '=') {
+    // If currently Error, reset first
+    if (input === 'Error') {
+      if (val === '=') return;
+      input = '0';
+    }
+
+    if (val === '=') {
       try {
-        // Replace symbols for JS
-        let expression = currentInput
-          .replace(/÷/g, '/')
-          .replace(/×/g, '*')
-          .replace(/x/g, '*');
-
-        // Handle % -> /100
-        expression = expression.replace(/(\d+(\.\d+)?)%/g, '($1/100)');
-
-        let result = eval(expression);
-        
-        if (result === Infinity || isNaN(result)) {
-          currentInput = 'Error';
-        } else {
-          // Round to avoid long decimals
-          result = Math.round((result + Number.EPSILON) * 100000000) / 100000000;
-          currentInput = result.toString();
+        if (isOperator(input.slice(-1))) {
+          input = input.slice(0, -1);
         }
-        shouldReset = true;
+        let exp = input.replace(/÷/g, '/').replace(/x/g, '*').replace(/×/g, '*');
+        // fix % -> /100
+        exp = exp.replace(/%/g, '/100');
+        
+        if (exp === '' || exp === '0') return;
+        
+        let res = Function('"use strict"; return (' + exp + ')')();
+        
+        if (!isFinite(res)) throw new Error();
+        
+        // clean result
+        res = parseFloat(res.toFixed(8));
+        input = res.toString();
       } catch {
-        currentInput = 'Error';
-        shouldReset = true;
+        input = 'Error';
       }
-      updateDisplay();
+      show();
       return;
     }
 
-    if (shouldReset && !isNaN(value)) {
-      currentInput = '';
-      shouldReset = false;
+    if (val === '.') {
+      let parts = input.split(/[\+\-\*\/÷\%x×]/);
+      let last = parts[parts.length - 1];
+      if (last.includes('.')) return;
+      input += '.';
+      show();
+      return;
     }
 
-    if (currentInput === '0' || currentInput === 'Error') {
-      if (value === '.') {
-        currentInput = '0.';
-      } else if (!isNaN(value)) {
-        currentInput = value;
-      } else {
-        currentInput = value === '%' ? '0' : value;
-        if(currentInput === '0') currentInput = value;
+    if (isOperator(val)) {
+      if (input === '0' && val !== '-') {
+        // don't allow + * / at start
+        return;
       }
-    } else {
-      if (value === '.') {
-        // prevent double dot in same number
-        let parts = currentInput.split(/[\+\-\*\/÷\%]/);
-        let lastPart = parts[parts.length - 1];
-        if (!lastPart.includes('.')) {
-          currentInput += value;
-        }
+      if (isOperator(input.slice(-1))) {
+        input = input.slice(0, -1) + val;
       } else {
-        // prevent double operators
-        let lastChar = currentInput.slice(-1);
-        let operators = ['+', '-', '*', '÷', '%', '×'];
-        if (operators.includes(lastChar) && operators.includes(value)) {
-          currentInput = currentInput.slice(0, -1) + value;
-        } else {
-          currentInput += value;
-        }
+        input += val;
       }
+      show();
+      return;
     }
-    shouldReset = false;
-    updateDisplay();
+
+    // number
+    if (input === '0') {
+      input = val;
+    } else {
+      input += val;
+    }
+    show();
   });
 });
 
 clearBtn.addEventListener('click', () => {
-  currentInput = '0';
-  shouldReset = false;
-  updateDisplay();
+  input = '0';
+  show();
 });
 
 deleteBtn.addEventListener('click', () => {
-  if (currentInput === 'Error' || currentInput.length === 1) {
-    currentInput = '0';
+  if (input === 'Error' || input.length <= 1) {
+    input = '0';
   } else {
-    currentInput = currentInput.slice(0, -1);
+    input = input.slice(0, -1);
   }
-  updateDisplay();
+  show();
 });
 
-// Init
-updateDisplay();
+show();
