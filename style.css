@@ -1,4 +1,4 @@
-   /* my calculator - fixed overflow issue*/
+/* my calculator - fixed */
 
 *{
   margin: 0;
@@ -14,40 +14,36 @@ body{
 }
 
 .outerContainer{
-  height: auto;
   width:80vw;
   max-width:320px;
   background-color: black;
   color:white;
   margin: 10px;
   overflow: hidden;
-  border-radius: 8px;
-  padding-bottom:15px;
+  border-radius: 12px;
+  padding: 15px;
+  padding-bottom:20px;
 }
 .screen{
-  height: 15vh;
-  width:auto;
+  height: 18vh;
+  width: 100%;
   background-color: white;
   color:black;
   border-radius: 10px;
-  margin-bottom: 30px;
-  margin-right: 20px;
-  margin-left: 20px;
-  position:relative;
-  top: 1.5rem;
+  margin-bottom: 25px;
+  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0 15px;
   overflow: hidden;
-  box-sizing: border-box;
-  border: 1px solid red;
+  border: none;
 }
 
 .screen h1{
-  font-weight: bolder;
-  font-size: 2.5rem;
-  color:red;
+  font-weight: bold;
+  font-size: 2.8rem;
+  color:#111;
   width:100%;
   margin: 0;
   text-align: right;
@@ -59,29 +55,27 @@ body{
 .clearDeletecontainer{
   display: flex;
   justify-content: center;
-  align-items: center;
   gap:10px;
-  margin: 20px 10px 0 10px;
+  margin-bottom: 10px;
 }
 
 .clearDeletecontainer .clearbtn{
-  margin: 6px;
-  height: 60px;
-  width:40vw;
+  height: 55px;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
   color:#000;
   font-weight:bold;
-  background-color: rgba(0,255,255,0.9);
+  background-color: #00e5ff;
+  cursor: pointer;
 }
 
 .numbercontainer{
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap:10px;
-  margin: 10px;
   list-style:none;
 }
 
@@ -92,18 +86,20 @@ body{
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .equlto{
   grid-column: span 2;
   color:#00ff88;
-  background-color: rgba(0,255,136,0.14)!important;
-  font-size: 1.5rem;
-  border: 2px solid rgba(0,255,136,0.14)!important;
-  box-shadow: 0 0 25px rgba(0,255,136,0.14);
+  background-color: rgba(0,255,136,0.18)!important;
+  font-size: 1.8rem;
+  border: 1px solid rgba(0,255,136,0.3)!important;
 }
 
 .defcolor{
-  background-color: rgba(200,130,236,0.9)!important;
+  background-color: #c882ec!important;
   font-size: 1.5rem;
+  color: white;
 }
