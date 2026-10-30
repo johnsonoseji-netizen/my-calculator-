@@ -1,108 +1,81 @@
-/* my calculator - fixed */
-
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background:#222;
+html,body{
+  width:100%;
+  height:100%;
+  background:#121212;
 }
-
 .outerContainer{
-  width:80vw;
-  max-width:320px;
-  background-color: black;
-  color:white;
-  margin: 10px;
-  overflow: hidden;
-  border-radius: 12px;
-  padding: 15px;
-  padding-bottom:20px;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  background:#121212;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
 }
 .screen{
-  height: 18vh;
-  width: 100%;
-  background-color: white;
-  color:black;
-  border-radius: 10px;
-  margin-bottom: 25px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 15px;
-  overflow: hidden;
-  border: none;
-}
-
-.screen h1{
-  font-weight: bold;
-  font-size: 2.8rem;
-  color:#111;
   width:100%;
-  margin: 0;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  background:white;
+  border-radius:15px;
+  padding:25px;
+  margin-bottom:20px;
+  min-height:100px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
 }
-
-.clearDeletecontainer{
-  display: flex;
-  justify-content: center;
-  gap:10px;
-  margin-bottom: 10px;
-}
-
-.clearDeletecontainer .clearbtn{
-  height: 55px;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  color:#000;
+.screen h1{
+  color:black;
+  font-size:65px;
   font-weight:bold;
-  background-color: #00e5ff;
-  cursor: pointer;
+  text-align:right;
+  word-break:break-all;
 }
-
+.clearDeletecontainer{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:14px;
+}
+.clearbtn{
+  height:70px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:26px;
+  font-weight:bold;
+  border-radius:14px;
+  background:#00e5ff;
+  color:black;
+}
 .numbercontainer{
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap:10px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
   list-style:none;
 }
-
 .numbercontainer li{
-  background-color: #333;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  cursor: pointer;
-  user-select: none;
+  height:80px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:28px;
+  font-weight:bold;
+  border-radius:14px;
+  background:#2a2a2a;
+  color:white;
 }
-
+.numbercontainer .defcolor{
+  background:#c084fc;
+}
 .equlto{
-  grid-column: span 2;
-  color:#00ff88;
-  background-color: rgba(0,255,136,0.18)!important;
-  font-size: 1.8rem;
-  border: 1px solid rgba(0,255,136,0.3)!important;
+  background:#0a3d0a !important;
+  color:#4ade80 !important;
+  grid-column:span 2;
 }
-
-.defcolor{
-  background-color: #c882ec!important;
-  font-size: 1.5rem;
-  color: white;
-}
-
-
-Rewrite again and correct mistakes
