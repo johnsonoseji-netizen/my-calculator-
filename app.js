@@ -1,68 +1,105 @@
-const ul=document.querySelector('ul')
-const calNum=ul.querySelectorAll('li')
-const screencal =document.querySelector('h1')
-const clearbtn=document.querySelector('#clearbtn')
-const deletbtn =document.querySelector('#deletbtn')
-let expression=''
+const display = document.querySelector('.screen h1');
+const buttons = document.querySelectorAll('.numbercontainer li');
+const clearBtn = document.getElementById('clearbtn');
+const deleteBtn = document.getElementById('deletbtn');
 
-function updateScreen(val){
-  screencal.textContent=val
-  
-  if(val.length > 9){
-    screencal.style.fontSize='26px'
-  }else{
-    screencal.style.fontSize='42px'
+let currentInput = '0';
+let shouldReset = false;
+
+function updateDisplay() {
+  if (currentInput.length > 12) {
+    display.style.fontSize = '40px';
+  } else {
+    display.style.fontSize = '62px';
   }
+  display.textContent = currentInput;
 }
 
-calNum.forEach((figuers) =>{
-  figuers.addEventListener('click',()=>{
-    const calvalue=figuers.getAttribute('value')
-     if(!calvalue)return;
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    let value = btn.getAttribute('value');
 
-    if(calvalue == '='){
-      try{
-        let tocal=expression.replace(/x/g,'*').replace(/X/g,'*').replace(/÷/g,'/')
-        let result=eval(tocal)
-        if(result.toString().length > 10){
-          result = Number(result).toExponential(4)
+    if (value === '=') {
+      try {
+        // Replace symbols for JS
+        let expression = currentInput
+          .replace(/÷/g, '/')
+          .replace(/×/g, '*')
+          .replace(/x/g, '*');
+
+        // Handle % -> /100
+        expression = expression.replace(/(\d+(\.\d+)?)%/g, '($1/100)');
+
+        let result = eval(expression);
+        
+        if (result === Infinity || isNaN(result)) {
+          currentInput = 'Error';
+        } else {
+          // Round to avoid long decimals
+          result = Math.round((result + Number.EPSILON) * 100000000) / 100000000;
+          currentInput = result.toString();
         }
-        updateScreen(result.toString())
-        expression=result.toString()
-      }catch{
-        updateScreen('error')
-        expression=''
+        shouldReset = true;
+      } catch {
+        currentInput = 'Error';
+        shouldReset = true;
       }
+      updateDisplay();
       return;
     }
 
-    if(calvalue == '%'){
-      let matches=expression.match(/(\d+\.?\d*)$/)
-      if(!matches)return;
-      let last=matches[0]
-      expression=expression.slice(0, -last.length) + (Number(last) / 100)
-      updateScreen(expression)
-      return;
+    if (shouldReset && !isNaN(value)) {
+      currentInput = '';
+      shouldReset = false;
     }
 
-    
-    if(expression.length >= 12) return;
-    expression +=calvalue
-    updateScreen(expression)
-  })
-})
+    if (currentInput === '0' || currentInput === 'Error') {
+      if (value === '.') {
+        currentInput = '0.';
+      } else if (!isNaN(value)) {
+        currentInput = value;
+      } else {
+        currentInput = value === '%' ? '0' : value;
+        if(currentInput === '0') currentInput = value;
+      }
+    } else {
+      if (value === '.') {
+        // prevent double dot in same number
+        let parts = currentInput.split(/[\+\-\*\/÷\%]/);
+        let lastPart = parts[parts.length - 1];
+        if (!lastPart.includes('.')) {
+          currentInput += value;
+        }
+      } else {
+        // prevent double operators
+        let lastChar = currentInput.slice(-1);
+        let operators = ['+', '-', '*', '÷', '%', '×'];
+        if (operators.includes(lastChar) && operators.includes(value)) {
+          currentInput = currentInput.slice(0, -1) + value;
+        } else {
+          currentInput += value;
+        }
+      }
+    }
+    shouldReset = false;
+    updateDisplay();
+  });
+});
 
-clearbtn.addEventListener('click',()=>{
-  expression=''
-  screencal.textContent='0'
-  screencal.style.fontSize='42px'
-})
+clearBtn.addEventListener('click', () => {
+  currentInput = '0';
+  shouldReset = false;
+  updateDisplay();
+});
 
-deletbtn.addEventListener('click',()=>{
-  expression=expression.slice(0, -1)
-  if(expression === ''){
-    screencal.textContent='0'
-  }else{
-    screencal.textContent=expression
+deleteBtn.addEventListener('click', () => {
+  if (currentInput === 'Error' || currentInput.length === 1) {
+    currentInput = '0';
+  } else {
+    currentInput = currentInput.slice(0, -1);
   }
-})
+  updateDisplay();
+});
+
+// Init
+updateDisplay();
